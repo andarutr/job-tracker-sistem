@@ -7,7 +7,8 @@
     <meta name="description" content="Enigma admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Enigma Admin Template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="LEFT4CODE">
-    <title>Dashboard - Enigma - Tailwind HTML Admin Template</title>
+    <title>@yield('title') - Job Tracking System</title>
+    @stack('styles')
     <link rel="stylesheet" href="/assets/css/app.css" />
 </head>
 <body class="py-5 md:py-0">
@@ -26,9 +27,8 @@
     <!-- END: Dark Mode Switcher-->
     
     <!-- BEGIN: JS Assets-->
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
     <script src="/assets/js/app.js"></script>
     <!-- END: JS Assets-->
+    @stack('scripts')
 </body>
 </html>
