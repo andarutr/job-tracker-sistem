@@ -10,6 +10,10 @@ class UserController extends Controller
     public function index()
     {
     	$data['menu'] = 'Dashboard';
+        $data['apply_count'] = \DB::table('applications')
+                                    ->where('user_id', Auth::user()->id)
+                                    ->count();
+
     	return view('pages.user.dashboard', $data);
     }
 
@@ -29,7 +33,7 @@ class UserController extends Controller
 
     public function applied_show($id)
     {
-        $data['menu'] = 'Data Lamaran';
+        $data['menu'] = 'Detail Lamaran';
         $data['apply'] = \DB::table('applications')
                                 ->where(['id' => $id, 'user_id' => Auth::user()->id])
                                 ->first();

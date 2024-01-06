@@ -22,7 +22,7 @@ Route::post('/login', [AuthController::class, 'login_backend']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::get('/admin', [AdminController::class, 'index']);
-Route::redirect('/user', '/user/applied');
+Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/applied', [UserController::class, 'applied']);
 Route::get('/user/applied/create', [UserController::class, 'applied_create']);
 Route::post('/user/applied/store', [UserController::class, 'applied_store']);
