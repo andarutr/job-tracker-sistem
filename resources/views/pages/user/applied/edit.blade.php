@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Apply')
+@section('title', 'Update Apply')
 
 @push('styles')
 <script src="https://cdn.tiny.cloud/1/looajco0995ko4gkdnbd5b9hfj9wy3502lybiyf4gp594lpr/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -29,21 +29,21 @@
             </div>
             <div id="vertical-form" class="p-5">
                 <div class="preview">
-                    <form action="/user/applied/store" method="POST">@csrf
+                    <form action="/user/applied/update/{{ $apply->id }}" method="POST">@csrf @method('put')
                     <div class="mt-3">
                         <label for="company" class="form-label">Nama Perusahaan</label>
-                        <input id="company" type="text" class="form-control" name="company" value="{{ old('company') }}">
+                        <input id="company" type="text" class="form-control" name="company" value="{{ $apply->company }}">
                         @error('company')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
                     <div class="mt-3">
                         <label for="role" class="form-label">Role Pekerjaan</label>
-                        <input id="role" type="text" class="form-control" name="role" value="{{ old('role') }}">
+                        <input id="role" type="text" class="form-control" name="role" value="{{ $apply->role }}">
                         @error('role')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
                     <div class="mt-3">
                         <label for="platform" class="form-label">Platform</label>
                         <select class="form-control" name="platform">
-                            <option value="">Pilih</option>
+                            <option value="{{ $apply->platform }}">{{ $apply->platform }}</option>
                             <option value="Linkedin" @if(old('platform') === 'Linkedin') selected="selected" @endif>Linkedin</option>
                             <option value="Job Street" @if(old('platform') === 'Job Street') selected="selected" @endif>Job Street</option>
                             <option value="Glints" @if(old('platform') === 'Glints') selected="selected" @endif>Glints</option>
@@ -55,13 +55,13 @@
                     </div>
                     <div class="mt-3">
                         <label for="apply_at" class="form-label">Tanggal Lamaran</label>
-                        <input id="apply_at" type="date" class="form-control" name="apply_at" value="{{ old('apply_at') }}">
+                        <input id="apply_at" type="date" class="form-control" name="apply_at" value="{{ \Carbon\Carbon::parse($apply->apply_at)->format('Y-m-d') }}">
                         @error('apply_at')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
                     <div class="mt-3">
                         <label for="status" class="form-label">Status Lamaran</label>
                         <select class="form-control" name="status">
-                            <option value="">Pilih</option>
+                            <option value="{{ $apply->status }}">{{ $apply->status }}</option>
                             <option value="Send CV" @if(old('status') === 'Send CV') selected="selected" @endif>Send CV</option>
                             <option value="Viewed" @if(old('status') === 'Viewed') selected="selected" @endif>Viewed</option>
                             <option value="Interview HRD" @if(old('status') === 'Interview HRD') selected="selected" @endif>Interview HRD</option>
@@ -73,15 +73,15 @@
                     </div>
                     <div class="mt-3">
                         <label for="link" class="form-label">Link Eksternal</label>
-                        <input id="link" type="text" class="form-control" name="link" value="{{ old('link') }}">
+                        <input id="link" type="text" class="form-control" name="link" value="{{ $apply->link }}">
                         @error('link')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
                     <div class="mt-3">
                         <label for="description" class="form-label">Deskripsi</label>
-                        <textarea id="myTextarea" name="description">{{ old('description') }}</textarea>
+                        <textarea id="myTextarea" name="description">{{ $apply->description }}</textarea>
                         @error('description')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
-                    <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                    <button type="submit" class="btn btn-success mt-5 text-white">Update</button>
                     </form>
                 </div>
             </div>

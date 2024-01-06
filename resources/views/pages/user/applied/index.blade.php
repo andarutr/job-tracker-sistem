@@ -13,7 +13,7 @@
         </div>
     </div>
     @if(session('msg'))
-    <div class="alert alert-{{ session('color') }} alert-dismissible show flex items-center mb-2" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> {{ session('msg') }} <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>
+    <div class="alert alert-{{ session('color') }} alert-dismissible show flex items-center mb-2 mt-3" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> {{ session('msg') }} <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>
     @endif
     <div class="intro-y box mt-3">
         <div class="p-5" id="basic-table">
@@ -45,11 +45,11 @@
                                     <span class="badge badge-primary">{{ $ap->status }}</span>
                                     @endif
                                  </td>
-                                 <td>{{ \Carbon\Carbon::parse($ap->apply_at)->format('d-m-y') }}</td>
+                                 <td>{{ \Carbon\Carbon::parse($ap->apply_at)->format('d F Y') }}</td>
                                  <td>
-                                    <a href="" class="btn btn-sm btn-primary"><i data-lucide="eye"></i></a>
-                                    <a href="" class="btn btn-sm btn-success text-white"><i data-lucide="edit"></i></a>
-                                    <a href="" class="btn btn-sm btn-danger"><i data-lucide="trash"></i></a>
+                                    <a href="/user/applied/show/{{ $ap->id }}" class="btn btn-sm btn-primary"><i data-lucide="eye"></i></a>
+                                    <a href="/user/applied/edit/{{ $ap->id }}" class="btn btn-sm btn-success text-white"><i data-lucide="edit"></i></a>
+                                    <a href="/user/applied/destroy/{{ $ap->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data?')"><i data-lucide="trash"></i></a>
                                  </td>
                              </tr>
                              @endforeach

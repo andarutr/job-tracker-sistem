@@ -26,3 +26,7 @@ Route::redirect('/user', '/user/applied');
 Route::get('/user/applied', [UserController::class, 'applied']);
 Route::get('/user/applied/create', [UserController::class, 'applied_create']);
 Route::post('/user/applied/store', [UserController::class, 'applied_store']);
+Route::get('/user/applied/show/{id}', [UserController::class, 'applied_show']);
+Route::get('/user/applied/edit/{id}', [UserController::class, 'applied_edit']);
+Route::put('/user/applied/update/{id}', [UserController::class, 'applied_update']);
+Route::get('/user/applied/destroy/{id}', [UserController::class, 'applied_destroy']);
