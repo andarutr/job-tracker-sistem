@@ -87,6 +87,21 @@ class UserController extends Controller
     	return view('pages.user.applied.index', $data);
     }
 
+    public function applied_search(Request $req)
+    {
+        $data['menu'] = 'Lamaran';
+        $data['search'] = $req->search;
+        $data['applications'] = \DB::table('applications')
+                                    ->orderByDesc('id')
+                                    ->where('company','like','%'.$data['search'].'%')
+                                    ->orwhere('role','like','%'.$data['search'].'%')
+                                    ->orwhere('platform','like','%'.$data['search'].'%')
+                                    ->orwhere('status','like','%'.$data['search'].'%')
+                                    ->paginate(25);
+
+        return view('pages.user.applied.index', $data);
+    }
+
     public function applied_create()
     {
     	$data['menu'] = 'Tambah Data Lamaran';
