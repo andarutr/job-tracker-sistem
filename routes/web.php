@@ -21,8 +21,18 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'login_backend']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
+// Admin
 Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/settings/profile', [AdminController::class, 'profile']);
+Route::post('/admin/settings/profile', [AdminController::class, 'profile_backend']);
+Route::get('/admin/settings/change-password', [AdminController::class, 'change_password']);
+Route::post('/admin/settings/change-password', [AdminController::class, 'change_password_backend']);
+// User
 Route::get('/user', [UserController::class, 'index']);
+Route::get('/user/settings/profile', [UserController::class, 'profile']);
+Route::post('/user/settings/profile', [UserController::class, 'profile_backend']);
+Route::get('/user/settings/change-password', [UserController::class, 'change_password']);
+Route::post('/user/settings/change-password', [UserController::class, 'change_password_backend']);
 Route::get('/user/applied', [UserController::class, 'applied']);
 Route::get('/user/applied/create', [UserController::class, 'applied_create']);
 Route::post('/user/applied/store', [UserController::class, 'applied_store']);
