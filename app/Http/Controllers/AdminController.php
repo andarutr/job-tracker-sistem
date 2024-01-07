@@ -8,7 +8,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-    	return view('pages.admin.dashboard');
+    	$data['menu'] = 'Dashboard';
+    	return view('pages.admin.dashboard', $data);
     }
 
     // Settings
@@ -71,5 +72,109 @@ class AdminController extends Controller
                 'color' => 'danger'
             ]);
         }
+    }
+
+    // Account
+    public function account()
+    {
+    	$data['menu'] = 'Account';
+    	$data['users'] = \DB::table('users')->orderByDesc('id')->paginate(25);
+
+    	return view('pages.admin.account.index', $data);
+    }
+
+    public function account_create()
+    {
+    	$data['menu'] = 'Create Account';
+    	return view('pages.admin.account.create', $data);
+    }
+
+    protected function account_create_backend(Request $req)
+    {
+    	$this->validate($req, [
+    		'name' => 'required',
+    		'email' => 'required',
+    		'is_admin' => 'required',
+    	]);
+
+    	\DB::table('users')->insert([
+    		'name' => $req->name,
+    		'email' => $req->email,
+    		'is_admin' => $req->is_admin,
+    		'password' => \Hash::make('JTS2024'),
+    		'created_at' => now(),
+    		'updated_at' => now()
+    	]);
+
+    	return redirect('/admin/account')->with([
+                'msg' => 'Berhasil mendaftarkan akun!',
+                'color' => 'primary'
+            ]);
+    }
+
+    public function account_edit($id)
+    {
+    	$data['menu'] = 'Update Account';
+    	$data['user'] = \DB::table('users')->where('id', $id)->first();
+
+    	return view('pages.admin.account.edit', $data);
+    }
+
+    protected function account_edit_backend(Request $req, $id)
+    {
+    	$this->validate($req, [
+    		'name' => 'required',
+    		'email' => 'required',
+    		'is_admin' => 'required',
+    	]);
+
+    	\DB::table('users')->where('id', $id)
+		->update([
+    		'name' => $req->name,
+    		'email' => $req->email,
+    		'is_admin' => $req->is_admin,
+    		'updated_at' => now()
+    	]);
+
+    	return redirect('/admin/account')->with([
+                'msg' => 'Berhasil memperbarui akun!',
+                'color' => 'success'
+            ]);
+    }
+
+    public function account_pass($id)
+    {
+    	$data['menu'] = 'Change Password Account';
+    	$data['user'] = \DB::table('users')->where('id', $id)->first();
+
+    	return view('pages.admin.account.password', $data);
+    }
+
+    protected function account_pass_backend(Request $req, $id)
+    {
+    	$this->validate($req, [
+    		'new_password' => 'required|min:8'
+    	]);
+
+    	\DB::table('users')->where('id',$id)
+    		->update([
+    			'password' => \Hash::make($req->new_password),
+    			'updated_at' => now()
+    		]);
+
+    	return redirect('/admin/account')->with([
+                'msg' => 'Berhasil memperbarui password akun!',
+                'color' => 'primary'
+            ]);
+    }
+
+    protected function account_destroy($id)
+    {
+    	\DB::table('users')->where('id', $id)->delete();
+    	
+    	return redirect('/admin/account')->with([
+                'msg' => 'Berhasil menghapus akun!',
+                'color' => 'primary'
+            ]);	
     }
 }

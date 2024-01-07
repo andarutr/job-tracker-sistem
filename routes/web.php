@@ -27,6 +27,15 @@ Route::get('/admin/settings/profile', [AdminController::class, 'profile']);
 Route::post('/admin/settings/profile', [AdminController::class, 'profile_backend']);
 Route::get('/admin/settings/change-password', [AdminController::class, 'change_password']);
 Route::post('/admin/settings/change-password', [AdminController::class, 'change_password_backend']);
+Route::get('/admin/account', [AdminController::class, 'account']);
+Route::get('/admin/account/create', [AdminController::class, 'account_create']);
+Route::post('/admin/account/create', [AdminController::class, 'account_create_backend']);
+Route::get('/admin/account/edit/{id}', [AdminController::class, 'account_edit']);
+Route::post('/admin/account/edit/{id}', [AdminController::class, 'account_edit_backend']);
+Route::get('/admin/account/pass/{id}', [AdminController::class, 'account_pass']);
+Route::post('/admin/account/pass/{id}', [AdminController::class, 'account_pass_backend']);
+Route::get('/admin/account/destroy/{id}', [AdminController::class, 'account_destroy']);
+
 // User
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/settings/profile', [UserController::class, 'profile']);
