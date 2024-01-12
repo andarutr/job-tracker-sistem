@@ -43,12 +43,16 @@
                                  <td>{{ $ap->role }}</td>
                                  <td>{{ $ap->platform }}</td>
                                  <td>
-                                    @if($ap->status === 'Success')
-                                    <span class="badge badge-success">{{ $ap->status }}</span>
+                                    @if($ap->status === 'Send CV')
+                                    <span class="btn btn-sm btn-primary">{{ $ap->status }}</span>
+                                    @elseif($ap->status === 'Viewed')
+                                    <span class="btn btn-sm btn-dark">{{ $ap->status }}</span>
+                                    @elseif($ap->status === 'Interview HRD' OR $ap->status === 'Interview User')
+                                    <span class="btn btn-sm btn-warning">{{ $ap->status }}</span>
                                     @elseif($ap->status === 'Failed')
-                                    <span class="badge badge-danger">{{ $ap->status }}</span>
+                                    <span class="btn btn-sm btn-danger">{{ $ap->status }}</span>
                                     @else
-                                    <span class="badge badge-primary">{{ $ap->status }}</span>
+                                    <span class="btn btn-sm btn-success">{{ $ap->status }}</span>
                                     @endif
                                  </td>
                                  <td>{{ \Carbon\Carbon::parse($ap->apply_at)->format('d F Y') }}</td>
