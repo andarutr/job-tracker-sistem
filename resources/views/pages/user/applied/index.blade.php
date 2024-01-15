@@ -33,7 +33,7 @@
                                  <th class="whitespace-nowrap">Platform</th>
                                  <th class="whitespace-nowrap">Status</th>
                                  <th class="whitespace-nowrap">AppliedAt</th>
-                                 <th class="whitespace-nowrap">Action</th>
+                                 <th class="whitespace-nowrap" width="20%">Action</th>
                              </tr>
                          </thead>
                          <tbody>
@@ -68,7 +68,7 @@
                  </div>
              </div> 
         </div> 
+     <div class="mt-5 ml-5 mb-5">{{ $applications->links() }}</div><br>
     </div> 
-     {{ $applications->links() }}
 </div>
 @endsection

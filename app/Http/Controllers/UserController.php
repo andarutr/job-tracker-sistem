@@ -13,6 +13,36 @@ class UserController extends Controller
         $data['apply_count'] = \DB::table('applications')
                                     ->where('user_id', Auth::user()->id)
                                     ->count();
+        $data['send_cv'] = \DB::table('applications')
+                                    ->where([
+                                        'user_id' => Auth::user()->id,
+                                        'status' => 'Send CV'
+                                    ])->count();
+        $data['viewed'] = \DB::table('applications')
+                                    ->where([
+                                        'user_id' => Auth::user()->id,
+                                        'status' => 'Viewed'
+                                    ])->count();
+        $data['interview_hrd'] = \DB::table('applications')
+                                    ->where([
+                                        'user_id' => Auth::user()->id,
+                                        'status' => 'Interview HRD'
+                                    ])->count();
+        $data['interview_user'] = \DB::table('applications')
+                                    ->where([
+                                        'user_id' => Auth::user()->id,
+                                        'status' => 'Interview User'
+                                    ])->count();
+        $data['failed'] = \DB::table('applications')
+                                    ->where([
+                                        'user_id' => Auth::user()->id,
+                                        'status' => 'Failed'
+                                    ])->count();
+        $data['success'] = \DB::table('applications')
+                                    ->where([
+                                        'user_id' => Auth::user()->id,
+                                        'status' => 'Success'
+                                    ])->count();
 
     	return view('pages.user.dashboard', $data);
     }
@@ -82,7 +112,7 @@ class UserController extends Controller
     public function applied()
     {
     	$data['menu'] = 'Lamaran';
-    	$data['applications'] = \DB::table('applications')->orderByDesc('id')->paginate(25);
+    	$data['applications'] = \DB::table('applications')->orderByDesc('id')->paginate(10);
 
     	return view('pages.user.applied.index', $data);
     }
@@ -97,7 +127,7 @@ class UserController extends Controller
                                     ->orwhere('role','like','%'.$data['search'].'%')
                                     ->orwhere('platform','like','%'.$data['search'].'%')
                                     ->orwhere('status','like','%'.$data['search'].'%')
-                                    ->paginate(25);
+                                    ->paginate(10);
 
         return view('pages.user.applied.index', $data);
     }

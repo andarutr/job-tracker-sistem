@@ -9,6 +9,58 @@
             {{ $menu }}
         </h2>
     </div>
+    <div class="col-span-12 mt-8">
+        <div class="grid grid-cols-12 gap-6 mt-5">
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $send_cv }}</div>
+                        <div class="text-base text-slate-500 mt-1">Send CV</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $viewed }}</div>
+                        <div class="text-base text-slate-500 mt-1">Viewed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $interview_hrd + $interview_user }}</div>
+                        <div class="text-base text-slate-500 mt-1">Interview</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $failed }}</div>
+                        <div class="text-base text-slate-500 mt-1">Failed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $success }}</div>
+                        <div class="text-base text-slate-500 mt-1">Success</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $apply_count }}</div>
+                        <div class="text-base text-slate-500 mt-1">Total Lamaran</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	<div class="col-span-12 lg:col-span-6 mt-6">
 	    <div class="box p-8 relative overflow-hidden bg-primary intro-y">
 	        <div class="leading-[2.15rem] w-full sm:w-72 text-white text-xl -mt-3">Selamat Datang {{ Auth::user()->name }}!</div>
