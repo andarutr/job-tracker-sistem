@@ -50,6 +50,7 @@
                             <option value="Pintarnya" @if(old('platform') === 'Pintarnya') selected="selected" @endif>Pintarnya</option>
                             <option value="E-Krut" @if(old('platform') === 'E-Krut') selected="selected" @endif>E-Krut</option>
                             <option value="Kupu-Kupu" @if(old('platform') === 'Kupu-Kupu') selected="selected" @endif>Kupu-Kupu</option>
+                            <option value="Instagram" @if(old('platform') === 'Instagram') selected="selected" @endif>Instagram</option>
                         </select>
                         @error('platform')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
