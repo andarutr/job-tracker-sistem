@@ -12,20 +12,73 @@
             <a href="/user/applied/create" class="btn btn-primary shadow-md mr-2">Tambah Data</a>
         </div>
     </div>
+    <div class="col-span-12 mt-8">
+        <div class="grid grid-cols-12 gap-6 mt-5">
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $linkedin }}</div>
+                        <div class="text-base text-slate-500 mt-1">LINKEDIN</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $glints }}</div>
+                        <div class="text-base text-slate-500 mt-1">GLINTS</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $jobstreet }}</div>
+                        <div class="text-base text-slate-500 mt-1">JOBSTREET</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $indeed }}</div>
+                        <div class="text-base text-slate-500 mt-1">INDEED</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $pintarnya }}</div>
+                        <div class="text-base text-slate-500 mt-1">PINTARNYA</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $ekrut }}</div>
+                        <div class="text-base text-slate-500 mt-1">E-KRUT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if(session('msg'))
     <div class="alert alert-{{ session('color') }} alert-dismissible show flex items-center mb-2 mt-3" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> {{ session('msg') }} <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>
     @endif
-    <form action="/user/applied/pencarian" method="GET" class="mt-4">
-        <input type="text" name="search" placeholder="Cari data...">
-    </form>
     @if(isset($search))
-    <p>Anda sedang mencari {{ $search }}</p>
+    <p class="mt-5">Anda sedang mencari {{ $search }}</p>
     @endif
-    <div class="intro-y box mt-3">
+    <div class="intro-y box mt-5">
         <div class="p-5" id="basic-table">
             <div class="preview">
                 <div class="overflow-x-auto">
-                    <table class="table table-striped mt-3">
+                    <form action="/user/applied/pencarian" method="GET" class="mt-5">
+                        <input type="text" name="search" placeholder="Cari data...">
+                    </form>
+                    <table class="table table-striped mt-5">
                          <thead>
                              <tr>
                                  <th class="whitespace-nowrap">Perusahaan</th>

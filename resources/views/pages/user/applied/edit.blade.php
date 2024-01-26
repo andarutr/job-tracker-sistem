@@ -45,12 +45,11 @@
                         <select class="form-control" name="platform">
                             <option value="{{ $apply->platform }}">{{ $apply->platform }}</option>
                             <option value="Linkedin" @if(old('platform') === 'Linkedin') selected="selected" @endif>Linkedin</option>
-                            <option value="Job Street" @if(old('platform') === 'Job Street') selected="selected" @endif>Job Street</option>
                             <option value="Glints" @if(old('platform') === 'Glints') selected="selected" @endif>Glints</option>
+                            <option value="Job Street" @if(old('platform') === 'Job Street') selected="selected" @endif>Job Street</option>
+                            <option value="Indeed" @if(old('platform') === 'Indeed') selected="selected" @endif>Indeed</option>
                             <option value="Pintarnya" @if(old('platform') === 'Pintarnya') selected="selected" @endif>Pintarnya</option>
                             <option value="E-Krut" @if(old('platform') === 'E-Krut') selected="selected" @endif>E-Krut</option>
-                            <option value="Kupu-Kupu" @if(old('platform') === 'Kupu-Kupu') selected="selected" @endif>Kupu-Kupu</option>
-                            <option value="Instagram" @if(old('platform') === 'Instagram') selected="selected" @endif>Instagram</option>
                         </select>
                         @error('platform')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>

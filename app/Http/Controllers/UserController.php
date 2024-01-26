@@ -113,6 +113,12 @@ class UserController extends Controller
     {
     	$data['menu'] = 'Lamaran';
     	$data['applications'] = \DB::table('applications')->orderByDesc('id')->paginate(10);
+        $data['linkedin'] = \DB::table('applications')->where('platform', 'Linkedin')->count();
+        $data['glints'] = \DB::table('applications')->where('platform', 'Glints')->count();
+        $data['jobstreet'] = \DB::table('applications')->where('platform', 'Job Street')->count();
+        $data['indeed'] = \DB::table('applications')->where('platform', 'Indeed')->count();
+        $data['pintarnya'] = \DB::table('applications')->where('platform', 'Pintarnya')->count();
+        $data['ekrut'] = \DB::table('applications')->where('platform', 'E-Krut')->count();
 
     	return view('pages.user.applied.index', $data);
     }
@@ -128,7 +134,13 @@ class UserController extends Controller
                                     ->orwhere('platform','like','%'.$data['search'].'%')
                                     ->orwhere('status','like','%'.$data['search'].'%')
                                     ->paginate(10);
-
+        $data['linkedin'] = \DB::table('applications')->where('platform', 'Linkedin')->count();
+        $data['glints'] = \DB::table('applications')->where('platform', 'Glints')->count();
+        $data['jobstreet'] = \DB::table('applications')->where('platform', 'Job Street')->count();
+        $data['indeed'] = \DB::table('applications')->where('platform', 'Indeed')->count();
+        $data['pintarnya'] = \DB::table('applications')->where('platform', 'Pintarnya')->count();
+        $data['ekrut'] = \DB::table('applications')->where('platform', 'E-Krut')->count();
+        
         return view('pages.user.applied.index', $data);
     }
 
