@@ -30,8 +30,16 @@
             <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
                 <div class="report-box zoom-in">
                     <div class="box p-5 text-center">
-                        <div class="text-3xl font-medium leading-8 mt-6">{{ $interview_hrd + $interview_user }}</div>
-                        <div class="text-base text-slate-500 mt-1">Interview</div>
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $interview_hrd }}</div>
+                        <div class="text-base text-slate-500 mt-1">Interview HRD</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                <div class="report-box zoom-in">
+                    <div class="box p-5 text-center">
+                        <div class="text-3xl font-medium leading-8 mt-6">{{ $interview_user }}</div>
+                        <div class="text-base text-slate-500 mt-1">Interview User</div>
                     </div>
                 </div>
             </div>
@@ -40,14 +48,6 @@
                     <div class="box p-5 text-center">
                         <div class="text-3xl font-medium leading-8 mt-6">{{ $failed }}</div>
                         <div class="text-base text-slate-500 mt-1">Failed</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
-                <div class="report-box zoom-in">
-                    <div class="box p-5 text-center">
-                        <div class="text-3xl font-medium leading-8 mt-6">{{ $success }}</div>
-                        <div class="text-base text-slate-500 mt-1">Success</div>
                     </div>
                 </div>
             </div>
