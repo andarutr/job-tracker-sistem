@@ -3,13 +3,8 @@
 @section('title', 'Create Apply')
 
 @push('styles')
-<script src="https://cdn.tiny.cloud/1/looajco0995ko4gkdnbd5b9hfj9wy3502lybiyf4gp594lpr/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<script type="text/javascript">
-  tinymce.init({
-    selector: '#myTextarea',
-    height: 400
-  });
-  </script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -47,9 +42,8 @@
                             <option value="Linkedin" @if(old('platform') === 'Linkedin') selected="selected" @endif>Linkedin</option>
                             <option value="Glints" @if(old('platform') === 'Glints') selected="selected" @endif>Glints</option>
                             <option value="Job Street" @if(old('platform') === 'Job Street') selected="selected" @endif>Job Street</option>
-                            <option value="Indeed" @if(old('platform') === 'Indeed') selected="selected" @endif>Indeed</option>
+                            <option value="Karir" @if(old('platform') === 'Karir') selected="selected" @endif>Karir</option>
                             <option value="Pintarnya" @if(old('platform') === 'Pintarnya') selected="selected" @endif>Pintarnya</option>
-                            <option value="E-Krut" @if(old('platform') === 'E-Krut') selected="selected" @endif>E-Krut</option>
                         </select>
                         @error('platform')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
@@ -78,7 +72,7 @@
                     </div>
                     <div class="mt-3">
                         <label for="description" class="form-label">Deskripsi</label>
-                        <textarea id="myTextarea" name="description">{{ old('description') }}</textarea>
+                        <textarea id="summernote" name="description">{{ old('description') }}</textarea>
                         @error('description')<p class="text-danger">{{ $message }}</p>@enderror
                     </div>
                     <button type="submit" class="btn btn-primary mt-5">Submit</button>
@@ -90,3 +84,15 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js
+"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+  </script> 
+@endpush

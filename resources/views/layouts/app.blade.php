@@ -22,7 +22,6 @@
     
     <!-- BEGIN: JS Assets-->
     <script src="/assets/js/app.js"></script>
-    <!-- END: JS Assets-->
     @stack('scripts')
 </body>
 </html>
