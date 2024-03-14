@@ -1,15 +1,26 @@
-@extends('layouts.app')
+<?php
 
-@section('title', 'Detail Lamaran')
+use function Livewire\Volt\{state, layout, title, with};
 
-@section('content')
+layout('layouts.app');
+
+title('Detail Lamaran');
+
+with(fn() => [
+    'apply' => \DB::table('applications')
+                ->where(['id' => Request::segment(4), 'user_id' => auth()->user()->id])
+                ->first()
+    ]);
+
+$backTo = function(){
+    return redirect('/user/applied');
+}
+
+?>
+
 <div class="content">
-    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">
-            {{ $menu }}
-        </h2>
-    </div>
     <p class="mt-4">Data Mutakhir : {{ \Carbon\Carbon::parse($apply->updated_at)->format('d F Y, H:i') }}</p>
+    <button class="btn btn-sm btn-success mt-1 text-white" wire:click="backTo">kembali</button>
     <div class="intro-y box mt-3">
         <div class="p-5" id="basic-table">
             <div class="preview">
@@ -49,27 +60,9 @@
                                 </td>
                              </tr>
                          </thead>
-                         <!-- <tbody>
-                             <tr>
-                                 <td>{{ $apply->company }}</td>
-                                 <td>{{ $apply->role }}</td>
-                                 <td>{{ $apply->platform }}</td>
-                                 <td>
-                                    @if($apply->status === 'Success')
-                                    <span class="badge badge-success">{{ $apply->status }}</span>
-                                    @elseif($apply->status === 'Failed')
-                                    <span class="badge badge-danger">{{ $apply->status }}</span>
-                                    @else
-                                    <span class="badge badge-primary">{{ $apply->status }}</span>
-                                    @endif
-                                 </td>
-                                 <td>{{ \Carbon\Carbon::parse($apply->apply_at)->format('d-m-y') }}</td>
-                             </tr>
-                         </tbody> -->
                      </table>
                  </div>
              </div> 
         </div> 
     </div> 
 </div>
-@endsection

@@ -55,9 +55,6 @@ $login = function(){
                 <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                     Login
                 </h2>
-                @if(session('msg'))
-                <p class="text-danger">{{ session('msg') }}</p>
-                @endif
                 <div class="intro-x mt-2 text-slate-400 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
                 <form wire:submit="login">
                 <div class="intro-x mt-8">

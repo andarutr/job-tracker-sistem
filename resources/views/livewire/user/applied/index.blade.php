@@ -1,12 +1,39 @@
-@extends('layouts.app')
+<?php
 
-@section('title', 'Lamaran')
+use function Livewire\Volt\{state, layout, title, computed, with, usesPagination};
 
-@section('content')
+layout('layouts.app');
+title('Lamaran Pekerjaan');
+
+state([
+    'linkedin' => \DB::table('applications')->where('platform', 'Linkedin')->count(),
+    'glints' => \DB::table('applications')->where('platform', 'Glints')->count(),
+    'jobstreet' => \DB::table('applications')->where('platform', 'Job Street')->count(),
+    'indeed' => \DB::table('applications')->where('platform', 'Indeed')->count(),
+    'pintarnya' => \DB::table('applications')->where('platform', 'Pintarnya')->count(),
+    'ekrut' => \DB::table('applications')->where('platform', 'E-Krut')->count(),
+]);
+
+state(['search'])->url();
+
+
+usesPagination();
+
+with(fn () => [
+    'applications' => $this->search ? \DB::table('applications')->where('company','like','%'.$this->search.'%')->paginate(10) : \DB::table('applications')->orderByDesc('id')->paginate(10)
+]);
+
+$destroy = function($id){
+    \DB::table('applications')->where('id', $id)->delete();
+    toastr()->success('Berhasil menghapus lamaran kerja!');
+}
+
+?>
+
 <div class="content">
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
         <h2 class="text-lg font-medium mr-auto">
-            {{ $menu }}
+            {{ $title ?? '' }}
         </h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             <a href="/user/applied/create" class="btn btn-primary shadow-md mr-2">Tambah Data</a>
@@ -65,9 +92,6 @@
         </div>
     </div>
 
-    @if(session('msg'))
-    <div class="alert alert-{{ session('color') }} alert-dismissible show flex items-center mb-2 mt-3" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> {{ session('msg') }} <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>
-    @endif
     @if(isset($search))
     <p class="mt-5">Anda sedang mencari {{ $search }}</p>
     @endif
@@ -75,9 +99,7 @@
         <div class="p-5" id="basic-table">
             <div class="preview">
                 <div class="overflow-x-auto">
-                    <form action="/user/applied/pencarian" method="GET" class="mt-5">
-                        <input type="text" name="search" placeholder="Cari data...">
-                    </form>
+                    <input type="text" wire:model.live="search" placeholder="Cari data...">
                     <table class="table table-striped mt-5">
                          <thead>
                              <tr>
@@ -110,9 +132,9 @@
                                  </td>
                                  <td>{{ \Carbon\Carbon::parse($ap->apply_at)->format('d F Y') }}</td>
                                  <td>
-                                    <a href="/user/applied/show/{{ $ap->id }}" class="btn btn-sm btn-primary"><i data-lucide="eye"></i></a>
-                                    <a href="/user/applied/edit/{{ $ap->id }}" class="btn btn-sm btn-success text-white"><i data-lucide="edit"></i></a>
-                                    <a href="/user/applied/destroy/{{ $ap->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data?')"><i data-lucide="trash"></i></a>
+                                    <a href="/user/applied/show/{{ $ap->id }}" class="btn btn-sm btn-primary"><i class="bi-eye"></i></a>
+                                    <a href="/user/applied/edit/{{ $ap->id }}" class="btn btn-sm btn-success text-white"><i class="bi-pencil-fill"></i></a>
+                                    <button wire:click="destroy('{{ $ap->id }}')" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data?')"><i class="bi-trash"></i></button>
                                  </td>
                              </tr>
                              @endforeach
@@ -121,7 +143,6 @@
                  </div>
              </div> 
         </div> 
-     <div class="mt-5 ml-5 mb-5">{{ $applications->links() }}</div><br>
     </div> 
+    <div class="mt-5 ml-5 mb-5">{{ $applications->links() }}</div><br>
 </div>
-@endsection

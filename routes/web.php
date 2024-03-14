@@ -2,7 +2,6 @@
 
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 
 /*
@@ -39,18 +38,15 @@ Route::middleware('isAdmin')->prefix('admin')->group(function(){
 // User
 Route::middleware('isUser')->group(function(){
 	Route::prefix('user')->group(function(){
-		Volt::route('/', 'user/dashboard');
-		Route::get('/settings/profile', [UserController::class, 'profile']);
-		Route::post('/settings/profile', [UserController::class, 'profile_backend']);
-		Route::get('/settings/change-password', [UserController::class, 'change_password']);
-		Route::post('/settings/change-password', [UserController::class, 'change_password_backend']);
-		Route::get('/applied', [UserController::class, 'applied']);
-		Route::get('/applied/pencarian', [UserController::class, 'applied_search']);
-		Route::get('/applied/create', [UserController::class, 'applied_create']);
-		Route::post('/applied/store', [UserController::class, 'applied_store']);
-		Route::get('/applied/show/{id}', [UserController::class, 'applied_show']);
-		Route::get('/applied/edit/{id}', [UserController::class, 'applied_edit']);
-		Route::put('/applied/update/{id}', [UserController::class, 'applied_update']);
-		Route::get('/applied/destroy/{id}', [UserController::class, 'applied_destroy']);
+		Route::redirect('/', '/user/dashboard');
+		Volt::route('/dashboard', 'user/dashboard');
+		// Route::get('/settings/profile', [UserController::class, 'profile']);
+		// Route::post('/settings/profile', [UserController::class, 'profile_backend']);
+		// Route::get('/settings/change-password', [UserController::class, 'change_password']);
+		// Route::post('/settings/change-password', [UserController::class, 'change_password_backend']);
+		Volt::route('/applied', 'user/applied/index');
+		Volt::route('/applied/create', 'user/applied/create');
+		Volt::route('/applied/show/{id}', 'user/applied/show');
+		Volt::route('/applied/edit/{id}', 'user/applied/update');
 	});
 });
