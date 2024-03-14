@@ -4,18 +4,13 @@
     <meta charset="utf-8">
     <link href="{{ asset('assets/images/logo.svg') }}" rel="shortcut icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') - Job Tracking System</title>
+    <title>Login - Job Tracker System</title>
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}" />
 </head>
-<body class="py-5 md:py-0">
-    <livewire:partials.mobile />
-    <livewire:partials.navbar />
-    <div class="flex overflow-hidden">
-        <livewire:partials.sidebar />
+<body class="login">
+    
+    {{ $slot }}
 
-        {{ $slot }}
-    </div>
-    <!-- BEGIN: JS Assets-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
 </body>
 </html>

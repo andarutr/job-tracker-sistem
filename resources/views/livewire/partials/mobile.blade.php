@@ -1,3 +1,11 @@
+<?php
+
+use function Livewire\Volt\{state};
+
+//
+
+?>
+
 <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
@@ -14,7 +22,7 @@
                     <div class="menu__title"> Dashboard </div>
                 </a>
             </li>
-            @if(Auth::user()->is_admin === 1)
+            @if(auth()->user()->is_admin === 1)
             <li>
                 <a href="/admin/account" class="menu">
                     <div class="menu__icon"> <i data-lucide="user"></i> </div>
