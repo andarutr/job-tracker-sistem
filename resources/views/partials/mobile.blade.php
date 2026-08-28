@@ -1,4 +1,4 @@
-<div class="mobile-menu md:hidden" ng-controller="SidebarController">
+<div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
             <img alt="Midone - HTML Admin Template" class="w-6" src="/assets/images/logo.svg">
