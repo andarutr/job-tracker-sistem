@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'picture',
     ];
 
     /**
@@ -41,5 +43,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_admin' => 'integer',
     ];
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'user_id');
+    }
 }

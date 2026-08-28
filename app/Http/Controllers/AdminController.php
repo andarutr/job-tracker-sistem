@@ -2,179 +2,133 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Http\Requests\Profile\UpdateProfileRequest;
+use App\Http\Requests\Profile\ChangePasswordRequest;
+use App\Http\Requests\Account\StoreAccountRequest;
+use App\Http\Requests\Account\UpdateAccountRequest;
+use App\Http\Requests\Account\ChangeAccountPasswordRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    protected UserRepositoryInterface $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
-    	$data['menu'] = 'Dashboard';
-    	return view('pages.admin.dashboard', $data);
+        return view('livewire.admin.dashboard', ['menu' => 'Dashboard']);
     }
 
-    // Settings
     public function profile()
     {
-        $data['menu'] = 'Profile';
-        return view('pages.settings.profile', $data);
+        return view('livewire.settings.profile', ['menu' => 'Profile']);
     }
 
-    protected function profile_backend(Request $req)
+    public function profile_backend(UpdateProfileRequest $request)
     {
-        $this->validate($req, [
-            'name' => 'required',
-            'email' => 'required'
-        ]);
+        $this->userRepository->updateProfile(Auth::id(), $request->validated());
 
-        $update = \DB::table('users')->where('id', Auth::user()->id)
-                        ->update([
-                            'name' => $req->name,
-                            'email' => $req->email,
-                            'updated_at' => now()
-                        ]);
-                        
         return redirect()->back()->with([
-                'msg' => 'Berhasil memperbarui biodata!',
-                'color' => 'success'
-            ]);
+            'msg' => 'Berhasil memperbarui biodata!',
+            'color' => 'success'
+        ]);
     }
 
     public function change_password()
     {
-        $data['menu'] = 'Change Password';
-        return view('pages.settings.change_password', $data);
+        return view('livewire.settings.change_password', ['menu' => 'Change Password']);
     }
 
-    protected function change_password_backend(Request $req)
+    public function change_password_backend(ChangePasswordRequest $request)
     {
-        $this->validate($req, [
-            'old_password' => 'required',
-            'new_password' => 'required|min:8'
-        ]);        
-
-        if(Auth::attempt(['email' => Auth::user()->email, 'password' => $req->old_password]))
-        {
-            \DB::table('users')
-                ->where('id', Auth::user()->id)
-                ->update([
-                    'password' => \Hash::make($req->new_password),
-                    'updated_at' => now()
-                ]);
-            
+        if (Auth::attempt(['email' => Auth::user()->email, 'password' => $request->old_password])) {
+            $this->userRepository->updatePassword(Auth::id(), $request->new_password);
             Auth::logout();
-            
+
             return redirect('/login')->with([
                 'msg' => 'Berhasil memperbarui password!'
             ]);
-        }else{
-            return redirect()->back()->with([
-                'msg' => 'Password anda salah!',
-                'color' => 'danger'
-            ]);
         }
+
+        return redirect()->back()->with([
+            'msg' => 'Password anda salah!',
+            'color' => 'danger'
+        ]);
     }
 
-    // Account
     public function account()
     {
-    	$data['menu'] = 'Account';
-    	$data['users'] = \DB::table('users')->orderByDesc('id')->paginate(25);
-
-    	return view('pages.admin.account.index', $data);
+        $users = $this->userRepository->getPaginatedExcept(Auth::id(), 25);
+        return view('livewire.admin.account.index', ['menu' => 'Account', 'users' => $users]);
     }
 
     public function account_create()
     {
-    	$data['menu'] = 'Create Account';
-    	return view('pages.admin.account.create', $data);
+        return view('livewire.admin.account.create', ['menu' => 'Create Account']);
     }
 
-    protected function account_create_backend(Request $req)
+    public function account_create_backend(StoreAccountRequest $request)
     {
-    	$this->validate($req, [
-    		'name' => 'required',
-    		'email' => 'required',
-    		'is_admin' => 'required',
-    	]);
+        $this->userRepository->create($request->validated());
 
-    	\DB::table('users')->insert([
-    		'name' => $req->name,
-    		'email' => $req->email,
-    		'is_admin' => $req->is_admin,
-    		'password' => \Hash::make('JTS2024'),
-    		'created_at' => now(),
-    		'updated_at' => now()
-    	]);
-
-    	return redirect('/admin/account')->with([
-                'msg' => 'Berhasil mendaftarkan akun!',
-                'color' => 'primary'
-            ]);
+        return redirect('/admin/account')->with([
+            'msg' => 'Berhasil mendaftarkan akun!',
+            'color' => 'primary'
+        ]);
     }
 
-    public function account_edit($id)
+    public function account_edit(int $id)
     {
-    	$data['menu'] = 'Update Account';
-    	$data['user'] = \DB::table('users')->where('id', $id)->first();
+        $user = $this->userRepository->findById($id);
+        if (!$user) {
+            abort(404);
+        }
 
-    	return view('pages.admin.account.edit', $data);
+        return view('livewire.admin.account.edit', ['menu' => 'Update Account', 'user' => $user]);
     }
 
-    protected function account_edit_backend(Request $req, $id)
+    public function account_edit_backend(UpdateAccountRequest $request, int $id)
     {
-    	$this->validate($req, [
-    		'name' => 'required',
-    		'email' => 'required',
-    		'is_admin' => 'required',
-    	]);
+        $this->userRepository->update($id, $request->validated());
 
-    	\DB::table('users')->where('id', $id)
-		->update([
-    		'name' => $req->name,
-    		'email' => $req->email,
-    		'is_admin' => $req->is_admin,
-    		'updated_at' => now()
-    	]);
-
-    	return redirect('/admin/account')->with([
-                'msg' => 'Berhasil memperbarui akun!',
-                'color' => 'success'
-            ]);
+        return redirect('/admin/account')->with([
+            'msg' => 'Berhasil memperbarui akun!',
+            'color' => 'success'
+        ]);
     }
 
-    public function account_pass($id)
+    public function account_pass(int $id)
     {
-    	$data['menu'] = 'Change Password Account';
-    	$data['user'] = \DB::table('users')->where('id', $id)->first();
+        $user = $this->userRepository->findById($id);
+        if (!$user) {
+            abort(404);
+        }
 
-    	return view('pages.admin.account.password', $data);
+        return view('livewire.admin.account.password', ['menu' => 'Change Password Account', 'user' => $user]);
     }
 
-    protected function account_pass_backend(Request $req, $id)
+    public function account_pass_backend(ChangeAccountPasswordRequest $request, int $id)
     {
-    	$this->validate($req, [
-    		'new_password' => 'required|min:8'
-    	]);
+        $this->userRepository->updatePassword($id, $request->new_password);
 
-    	\DB::table('users')->where('id',$id)
-    		->update([
-    			'password' => \Hash::make($req->new_password),
-    			'updated_at' => now()
-    		]);
-
-    	return redirect('/admin/account')->with([
-                'msg' => 'Berhasil memperbarui password akun!',
-                'color' => 'primary'
-            ]);
+        return redirect('/admin/account')->with([
+            'msg' => 'Berhasil memperbarui password akun!',
+            'color' => 'primary'
+        ]);
     }
 
-    protected function account_destroy($id)
+    public function account_destroy(int $id)
     {
-    	\DB::table('users')->where('id', $id)->delete();
-    	
-    	return redirect('/admin/account')->with([
-                'msg' => 'Berhasil menghapus akun!',
-                'color' => 'primary'
-            ]);	
+        $this->userRepository->delete($id);
+
+        return redirect('/admin/account')->with([
+            'msg' => 'Berhasil menghapus akun!',
+            'color' => 'primary'
+        ]);
     }
 }

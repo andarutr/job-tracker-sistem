@@ -9,7 +9,8 @@
 </head>
 <body class="login">
     
-    {{ $slot }}
+    @yield('content')
+    {{ $slot ?? '' }}
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
 </body>
